@@ -9,43 +9,54 @@ import {createStore} from 'redux'
 import {Provider} from 'react-redux'
 
 const initialState = {
-  operation: "",
+  operationHistory: "",
   display: 0,
-  operand: 0,
   result: 0,
-  operator:""
+  operator:"",
+  addingNumber: false
 }
 
 //este es el STORE de toda mi app - lo guardo en una constante
 const store = createStore(function(state = initialState, action) {
   switch (action.type) {
     case "ERASE_DISPLAY":
-      return {...state, display: ""}
+      if (action.payload) {
+        return {...state, display: 0, addingNumber: false}
+      } else {
+        return {...state, display: ""}
+      }
 
     case "RECEIVE_OPERATOR":
       return {...state, searching : true}
 
     case "RECEIVE_NUMBER":
-      return {...state, display: state.display + action.payload}
+      return {...state, display: state.display + action.payload, addingNumber: true}
 
     case "FIRST_VALUE":
-      return {...state, result: Number(state.display), operand: Number(state.display), operator: action.payload}
+      return {...state, result: Number(state.display), operator: action.payload, addingNumber: false}
 
     case "SHOW_RESULT":
       return {...state, display: state.result}
 
     case "SHOW_OPERATION":
-      return {...state, operation: state.operation + state.display + action.payload}
+      return {...state, operationHistory: state.operationHistory + state.display + action.payload}
 
     case "DO_OPERATION":
       switch (state.operator) {
         case '+':
-          return {...state, result: state.operand + Number(state.display), operator: action.payload}
+          return {...state, result: state.result + Number(state.display), operator: action.payload, addingNumber: false}
         case '-':
-          return {...state, result: state.operand - Number(state.display), operator: action.payload}
+          return {...state, result: state.result - Number(state.display), operator: action.payload, addingNumber: false}
+        case '*':
+          return {...state, result: state.result * Number(state.display), operator: action.payload, addingNumber: false}
+        case '/':
+          return {...state, result: state.result / Number(state.display), operator: action.payload, addingNumber: false}
+        case '=':
+          return {...state, result: state.result, operator: action.payload, addingNumber: false}
       }
-    
-    
+      
+      case "ERASE_ALL":
+        return {...state, display: 0, operationHistory: "", result: 0, operator: "", addingNumber: false}
   }
   
   return state
