@@ -1,22 +1,23 @@
-import logo from './logo.svg';
+import React, { Component } from 'react'
 import './App.css';
-import {Container, Row, Col} from 'react-bootstrap'
-import Result from './Result'
-import Buttons from './Buttons'
+import {Container, Col, Row} from 'react-bootstrap'
+import Display from './components/Display'
+import Buttons from './components/Buttons'
 
-function App() {
-  return (
-    <div className="App">
-      <Container fluid>
+class App extends Component {
 
-        <Result></Result>
-
-        <Buttons></Buttons>
-        
-          
-      </Container>
-    </div>
-  );
+  render() {
+    return (
+        <Container className="calculator py-2" fluid>
+          <Row>
+            <Col>
+              <Display />
+              <Buttons />
+            </Col>
+          </Row>
+        </Container>
+    )
+  }
 }
 
 export default App;
