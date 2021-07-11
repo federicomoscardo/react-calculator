@@ -1,22 +1,25 @@
-import logo from './logo.svg';
+import React, { Component } from 'react'
 import './App.css';
 import {Container, Row, Col} from 'react-bootstrap'
-import Result from './Result'
-import Buttons from './Buttons'
+import Display from './components/Display'
+import Buttons from './components/Buttons'
+import { ThemeConsumer } from 'react-bootstrap/esm/ThemeProvider';
 
-function App() {
-  return (
-    <div className="App">
-      <Container fluid>
+class App extends Component {
 
-        <Result></Result>
-
-        <Buttons></Buttons>
-        
+  render() {
+    return (
+      <div className="App">
+        <Container fluid>
+  
+          <Display />
+  
+          <Buttons />
           
-      </Container>
-    </div>
-  );
+        </Container>
+      </div>
+    )
+  }
 }
 
 export default App;
